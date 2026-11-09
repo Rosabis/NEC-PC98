@@ -1306,6 +1306,18 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Hostdrv 主機目錄共享設定(&H)...",              IDM_HOSTDRVOPT
     END
+    POPUP "工具(&T)"
+    BEGIN
+        MENUITEM "工具視窗(&T)",                IDM_TOOLWIN
+        MENUITEM "按鍵顯示(&K)",                IDM_KEYDISP
+        MENUITEM "軟體鍵盤(&S)",                IDM_SOFTKBD
+        MENUITEM "記憶體偵錯(&M)",              IDM_MEMDBG32
+        MENUITEM SEPARATOR
+        MENUITEM "記憶體傾印(&D)",              IDM_MEMORYDUMP
+        MENUITEM "完整記憶體傾印(&F)",          IDM_MEMORYDUMPALL
+        MENUITEM "偵錯工具(&U)",                IDM_DEBUGUTY
+    END
+
     POPUP "其他(&O)"
     BEGIN
         MENUITEM "儲存 BMP 螢幕擷取(&B)...",                IDM_BMPSAVE

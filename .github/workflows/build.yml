@@ -1,0 +1,170 @@
+name: Build np21w (NEC)
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  release:
+    types: [ published ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ Win32, x64 ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      # windows-2022 image ships the v142 toolset but NOT the v142 ATL/MFC components,
+      # so <atlbase.h> (trace.cpp / sdwasapi.cpp / asiodriverlist.cpp) and <afxres.h>
+      # (np2.rc) fail with C1083 / RC1015. Install the v142 ATL + MFC components
+      # (issue actions/runner-images#12287). Keep v142 to match the local/98 project.
+      - name: Install v142 ATL + MFC (required for atlbase.h / afxres.h)
+        shell: pwsh
+        run: |
+          $vsPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath
+          Write-Host "VS install path: $vsPath"
+          $components = "Microsoft.VisualStudio.Component.VC.14.29.16.11.ATL Microsoft.VisualStudio.Component.VC.14.29.16.11.MFC"
+          $args = "modify --installPath `"$vsPath`" --add $components --quiet --norestart --nocache"
+          Set-Location "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\"
+          for ($i = 0; $i -lt 2; $i++) {
+            $p = Start-Process -FilePath "vs_installer.exe" -ArgumentList $args -Wait -PassThru -WindowStyle Hidden
+            Write-Host "Install attempt $($i+1) exit code: $($p.ExitCode)"
+          }
+
+      - name: Build (Release + HAXM + WHPX, ${{ matrix.platform }})
+        shell: pwsh
+        run: |
+          $platform = "${{ matrix.platform }}"
+
+          $dllProjects = @(
+            "win9x\resources\1252\np2vs2008_1252.vcxproj",
+            "win9x\resources\932\np2vs2008_932.vcxproj",
+            "win9x\resources\936\np2vs2008_936.vcxproj",
+            "win9x\resources\950\np2vs2008_950.vcxproj"
+          )
+
+          # np21: Release + HAXM on both arches; WHPX on x64 only
+          $np21Configs = @("Release", "ReleaseHAXM")
+          if ($platform -eq "x64") { $np21Configs += "ReleaseWHPX" }
+
+          # np2: Release + HAXM only (np2vs2019 has no WHPX configuration)
+          $np2Configs = @("Release", "ReleaseHAXM")
+
+          # The language DLL projects (np2vs2008_*) are legacy VS2010-era files with no
+          # explicit <PlatformToolset>; MSBuild then defaults to v100, which is absent on the
+          # windows-2022 runner -> MSB8020. Force v142 (matches np21/np2 and the local toolchain).
+          # Resource-only DLLs are toolset-agnostic, so the output is equivalent.
+          function Build-Project($proj, $cfg, $plat) {
+            Write-Host "=== Building $proj ($plat, $cfg) ==="
+            msbuild $proj /p:Configuration=$cfg /p:Platform=$plat /p:SolutionName=np21w /p:WindowsTargetPlatformVersion=10.0 /p:PlatformToolset=v142 /verbosity:minimal
+            if ($LASTEXITCODE -ne 0) { throw "Build failed for $proj ($cfg $plat)" }
+          }
+
+          foreach ($cfg in $np21Configs) { Build-Project "win9x\np21vs2019.vcxproj" $cfg $platform }
+          foreach ($cfg in $np2Configs)  { Build-Project "win9x\np2vs2019.vcxproj"  $cfg $platform }
+          foreach ($proj in $dllProjects) { Build-Project $proj "Release" $platform }
+
+      # OutDir includes $(Configuration), so each variant lands in its own subfolder
+      # (Release / ReleaseHAXM / ReleaseWHPX) and they never overwrite each other.
+      - name: Upload platform artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: np21w-${{ matrix.platform }}
+          path: bin/np21w/${{ matrix.platform }}
+          if-no-files-found: error
+
+  package:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Win32 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: np21w-Win32
+          path: pkg/Win32
+
+      - name: Download x64 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: np21w-x64
+          path: pkg/x64
+
+      - name: Assemble distribution
+        shell: pwsh
+        run: |
+          $ver = "0.86-rev107"
+          $stage = "np21w-$ver"
+          New-Item -ItemType Directory -Force -Path "$stage\language","$stage\haxm","$stage\whpx" | Out-Null
+
+          # root executables (software / default Release build)
+          Copy-Item pkg/Win32/Release/*.exe "$stage/"
+          Copy-Item pkg/x64/Release/*.exe   "$stage/"
+
+          # language resource DLLs (built with Release config)
+          Copy-Item pkg/Win32/Release/np2_*.dll  "$stage/language/"
+          Copy-Item pkg/x64/Release/np2x64_*.dll "$stage/language/"
+
+          # HAXM variants (both arches)
+          Copy-Item pkg/Win32/ReleaseHAXM/*.exe "$stage/haxm/"
+          Copy-Item pkg/x64/ReleaseHAXM/*.exe   "$stage/haxm/"
+
+          # WHPX variants (x64 only; np2 has no WHPX config)
+          if (Test-Path pkg/x64/ReleaseWHPX) {
+            Copy-Item pkg/x64/ReleaseWHPX/*.exe "$stage/whpx/"
+          }
+
+          # language readme
+          $readme = @(
+            "np21w UI language resource DLLs",
+            "",
+            "Win32 : np2_1252.dll (English)   np2_932.dll (Japanese)   np2_936.dll (Simplified Chinese)   np2_950.dll (Traditional Chinese)",
+            "x64   : np2x64_1252.dll (English)   np2x64_932.dll (Japanese)   np2x64_936.dll (Simplified Chinese)   np2x64_950.dll (Traditional Chinese)",
+            "",
+            "Keep this folder next to np21w.exe / np2w.exe."
+          )
+          Set-Content -Path "$stage/language/readme.txt" -Value $readme -Encoding utf8
+
+          # backend notes
+          Set-Content -Path "$stage/haxm/readme.txt" -Value @(
+            "HAXM-accelerated builds of np21w / np2w.",
+            "Requires the Intel HAXM driver installed on the host."
+          ) -Encoding utf8
+          if (Test-Path "$stage/whpx/np21x64w.exe") {
+            Set-Content -Path "$stage/whpx/readme.txt" -Value @(
+              "WHPX-accelerated build of np21x64w (x64 only).",
+              "Requires the Windows Hypervisor Platform feature enabled on the host."
+            ) -Encoding utf8
+          }
+
+          # licenses
+          Copy-Item -Recurse LICENSES "$stage/LICENSES"
+
+          # single zip (top folder = np21w-<ver>/)
+          Compress-Archive -Path $stage -DestinationPath "np21w-$ver.zip" -Force
+          Write-Host "Created np21w-$ver.zip"
+          Get-ChildItem "$stage" -Recurse | Select-Object FullName, Length
+
+      - name: Upload distribution artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: np21w-dist
+          path: np21w-0.86-rev107.zip
+          if-no-files-found: error
+
+      - name: Attach to GitHub Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: np21w-0.86-rev107.zip

@@ -1,6 +1,6 @@
 /**
  * @file	menu.cpp
- * @brief	ƒƒjƒ…[‚ÌéŒ¾‚¨‚æ‚ÑƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ì’è‹`‚ğ‚µ‚Ü‚·
+ * @brief	ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½ÌéŒ¾ï¿½ï¿½ï¿½ï¿½ÑƒCï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½Cï¿½Xï¿½Ì’ï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
  */
 
 #include "compiler.h"
@@ -24,13 +24,13 @@
 extern UINT8	np2userpause;
 
 /**
- * ŒŸõ
- * @param[in] hMenu ƒƒjƒ…[ ƒnƒ“ƒhƒ‹
+ * ï¿½ï¿½ï¿½ï¿½
+ * @param[in] hMenu ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
  * @param[in] uID ID
- * @param[out] phmenuRet Œ©‚Â‚©‚Á‚½ƒƒjƒ…[
- * @param[out] pnPos Œ©‚Â‚©‚Á‚½ˆÊ’u
- * @retval true Œ©‚Â‚©‚Á‚½
- * @retval false Œ©‚Â‚©‚ç‚È‚©‚Á‚½
+ * @param[out] phmenuRet ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[
+ * @param[out] pnPos ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê’u
+ * @retval true ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @retval false ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 bool menu_searchmenu(HMENU hMenu, UINT uID, HMENU *phmenuRet, int *pnPos)
 {
@@ -65,12 +65,12 @@ bool menu_searchmenu(HMENU hMenu, UINT uID, HMENU *phmenuRet, int *pnPos)
 }
 
 /**
- * ƒƒjƒ…[’Ç‰Á
- * @param[in] hMenu ƒƒjƒ…[ ƒnƒ“ƒhƒ‹
- * @param[in] nPos ’Ç‰Á‚·‚éˆÊ’u
- * @param[in] hmenuAdd ’Ç‰Á‚·‚éƒƒjƒ…[
- * @param[in] bSeparator ƒZƒpƒŒ[ƒ^‚ğ’Ç‰Á‚·‚é
- * @return ’Ç‰Á”
+ * ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Ç‰ï¿½
+ * @param[in] hMenu ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
+ * @param[in] nPos ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½Ê’u
+ * @param[in] hmenuAdd ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½éƒï¿½jï¿½ï¿½ï¿½[
+ * @param[in] bSeparator ï¿½Zï¿½pï¿½ï¿½ï¿½[ï¿½^ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @return ï¿½Ç‰ï¿½ï¿½ï¿½
  */
 int menu_addmenu(HMENU hMenu, int nPos, HMENU hmenuAdd, BOOL bSeparator)
 {
@@ -112,12 +112,12 @@ int menu_addmenu(HMENU hMenu, int nPos, HMENU hmenuAdd, BOOL bSeparator)
 }
 
 /**
- * ƒƒjƒ…[’Ç‰Á
- * @param[in] hMenu ƒƒjƒ…[ ƒnƒ“ƒhƒ‹
- * @param[in] nPos ’Ç‰Á‚·‚éˆÊ’u
- * @param[in] uID ƒƒjƒ…[ ID
- * @param[in] bSeparator ƒZƒpƒŒ[ƒ^‚ğ’Ç‰Á‚·‚é
- * @return ’Ç‰Á”
+ * ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Ç‰ï¿½
+ * @param[in] hMenu ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
+ * @param[in] nPos ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½Ê’u
+ * @param[in] uID ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ ID
+ * @param[in] bSeparator ï¿½Zï¿½pï¿½ï¿½ï¿½[ï¿½^ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @return ï¿½Ç‰ï¿½ï¿½ï¿½
  */
 int menu_addmenures(HMENU hMenu, int nPos, UINT uID, BOOL bSeparator)
 {
@@ -133,11 +133,11 @@ int menu_addmenures(HMENU hMenu, int nPos, UINT uID, BOOL bSeparator)
 }
 
 /**
- * ƒƒjƒ…[’Ç‰Á
- * @param[in] hMenu ƒƒjƒ…[ ƒnƒ“ƒhƒ‹
- * @param[in] uByID ƒƒjƒ…[ˆÊ’u
- * @param[in] uID ƒƒjƒ…[ ID
- * @return ’Ç‰Á”
+ * ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Ç‰ï¿½
+ * @param[in] hMenu ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
+ * @param[in] uByID ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Ê’u
+ * @param[in] uID ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ ID
+ * @return ï¿½Ç‰ï¿½ï¿½ï¿½
  */
 static int menu_addmenubyid(HMENU hMenu, UINT uByID, UINT uID)
 {
@@ -153,13 +153,13 @@ static int menu_addmenubyid(HMENU hMenu, UINT uByID, UINT uID)
 }
 
 /**
- * ƒƒjƒ…[’Ç‰Á
- * @param[in] hMenu ƒƒjƒ…[‚Ìƒnƒ“ƒhƒ‹
- * @param[in] uPosition V‚µ‚¢€–Ú‚Ì’¼‘O‚ÉˆÊ’u‚·‚é€–Ú
- * @param[in] uFlags ƒIƒvƒVƒ‡ƒ“
- * @param[in] uIDNewItem ¯•ÊqAƒƒjƒ…[AƒTƒuƒƒjƒ…[‚Ì‚¢‚¸‚ê‚©
- * @param[in] lpNewItem ƒƒjƒ…[ •¶š—ñ
- * @return ŠÖ”‚ª¬Œ÷‚·‚é‚ÆA0 ˆÈŠO‚Ì’l‚ª•Ô‚è‚Ü‚·
+ * ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Ç‰ï¿½
+ * @param[in] hMenu ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Ìƒnï¿½ï¿½ï¿½hï¿½ï¿½
+ * @param[in] uPosition ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú‚Ì’ï¿½ï¿½Oï¿½ÉˆÊ’uï¿½ï¿½ï¿½é€ï¿½ï¿½
+ * @param[in] uFlags ï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½
+ * @param[in] uIDNewItem ï¿½ï¿½ï¿½Êqï¿½Aï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Aï¿½Tï¿½uï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Ì‚ï¿½ï¿½ï¿½ï¿½ê‚©
+ * @param[in] lpNewItem ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @return ï¿½Öï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÆA0 ï¿½ÈŠOï¿½Ì’lï¿½ï¿½ï¿½Ô‚ï¿½Ü‚ï¿½
  */
 static BOOL InsertMenuString(HMENU hMenu, UINT uPosition, UINT uFlags, UINT_PTR uIDNewItem, UINT uStringID)
 {
@@ -174,9 +174,9 @@ static BOOL InsertMenuString(HMENU hMenu, UINT uPosition, UINT uFlags, UINT_PTR 
 }
 
 /**
- * ƒƒjƒ…[’Ç‰Á (’PƒƒRƒs[)
- * @param[in] popup ƒRƒs[æ
- * @param[in] menubar ƒRƒs[Œ³
+ * ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Ç‰ï¿½ (ï¿½Pï¿½ï¿½ï¿½Rï¿½sï¿½[)
+ * @param[in] popup ï¿½Rï¿½sï¿½[ï¿½ï¿½
+ * @param[in] menubar ï¿½Rï¿½sï¿½[ï¿½ï¿½
  */
 void menu_addmenubar(HMENU popup, HMENU menubar)
 {
@@ -188,8 +188,8 @@ void menu_addmenubar(HMENU popup, HMENU menubar)
 // ----
 
 /**
- * ƒVƒXƒeƒ€ ƒƒjƒ…[‰Šú‰»
- * @param[in] hMenu ƒƒjƒ…[ ƒnƒ“ƒhƒ‹
+ * ï¿½Vï¿½Xï¿½eï¿½ï¿½ ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @param[in] hMenu ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
  */
 void sysmenu_initialize(HMENU hMenu)
 {
@@ -213,8 +213,8 @@ void sysmenu_initialize(HMENU hMenu)
 }
 
 /**
- * ƒVƒXƒeƒ€ ƒƒjƒ…[XV
- * @param[in] hMenu ƒƒjƒ…[ ƒnƒ“ƒhƒ‹
+ * ï¿½Vï¿½Xï¿½eï¿½ï¿½ ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Xï¿½V
+ * @param[in] hMenu ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
  */
 void sysmenu_update(HMENU hMenu)
 {
@@ -245,8 +245,8 @@ void sysmenu_update(HMENU hMenu)
 // ----
 
 /**
- * ƒƒjƒ…[‰Šú‰»
- * @param[in] ƒƒjƒ…[ ƒnƒ“ƒhƒ‹
+ * ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * @param[in] ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
  */
 void xmenu_initialize(HMENU hMenu)
 {
@@ -308,8 +308,8 @@ void xmenu_initialize(HMENU hMenu)
 }
 
 /**
- * ƒƒjƒ…[ó‘Ô‚ğXV‚·‚é
- * @param[in] hMenu ƒƒjƒ…[ ƒnƒ“ƒhƒ‹
+ * ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½ï¿½Ô‚ï¿½ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½
+ * @param[in] hMenu ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
  */
 void xmenu_update(HMENU hMenu)
 {
@@ -320,6 +320,15 @@ void xmenu_update(HMENU hMenu)
 	
 	// Emulate
 	CheckMenuItem(hMenu, IDM_PAUSE, MF_BYCOMMAND | MFCHECK(np2userpause));
+
+	// Tools
+	CheckMenuItem(hMenu, IDM_TOOLWIN, MF_BYCOMMAND | MFCHECK(np2oscfg.toolwin));
+#if defined(SUPPORT_KEYDISP)
+	CheckMenuItem(hMenu, IDM_KEYDISP, MF_BYCOMMAND | MFCHECK(np2oscfg.keydisp));
+#endif
+#if defined(SUPPORT_SOFTKBD)
+	CheckMenuItem(hMenu, IDM_SOFTKBD, MF_BYCOMMAND | MFCHECK(np2oscfg.skbdwin));
+#endif
 	for (int i = IDM_CHANGECLK_BEGIN; i <= IDM_CHANGECLK_END; i++) {
 		// CPU MULTIPLE
 		UINT16 mul = np2oscfg.cpumullst[i - IDM_CHANGECLK_BEGIN];
@@ -559,8 +568,8 @@ void xmenu_update(HMENU hMenu)
 }
 
 /**
- * ƒƒjƒ…[ó‘Ô‚ğXV‚·‚éiINI•ÏXj
- * @param[in] hMenu ƒƒjƒ…[ ƒnƒ“ƒhƒ‹
+ * ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½ï¿½Ô‚ï¿½ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½iINIï¿½ÏXï¿½ï¿½ï¿½j
+ * @param[in] hMenu ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
  */
 void xmenu_iniupdate(HMENU hMenu)
 {

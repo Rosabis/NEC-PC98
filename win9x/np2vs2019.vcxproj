@@ -322,6 +322,14 @@
       <EnableDpiAwareness>true</EnableDpiAwareness>
     </Manifest>
   </ItemDefinitionGroup>
+  <!-- Global source-charset override: np21 source has cp932 (Shift-JIS) comments whose
+       trailing 0x5C byte gets misparsed as a line-continuation on the English CI runner
+       (MSVC defaults to 1252). Forces Shift-JIS parsing so C4010/C2143 disappear. -->
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalOptions>/source-charset:.932 /execution-charset:.932 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\bios\bios.c" />
     <ClCompile Include="..\bios\bios09.c" />

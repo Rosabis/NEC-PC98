@@ -1297,6 +1297,18 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "ホストディレクトリ共有設定(&H)...",   IDM_HOSTDRVOPT
     END
+    POPUP "ツール(&T)"
+    BEGIN
+        MENUITEM "ツールウィンドウ(&T)",         IDM_TOOLWIN
+        MENUITEM "キー表示(&K)",                IDM_KEYDISP
+        MENUITEM "ソフトキーボード(&S)",        IDM_SOFTKBD
+        MENUITEM "メモリデバッグ(&M)",          IDM_MEMDBG32
+        MENUITEM SEPARATOR
+        MENUITEM "メモリダンプ(&D)",            IDM_MEMORYDUMP
+        MENUITEM "フルメモリダンプ(&F)",        IDM_MEMORYDUMPALL
+        MENUITEM "デバッグユーティリティ(&U)",  IDM_DEBUGUTY
+    END
+
     POPUP "その他(&O)"
     BEGIN
         MENUITEM "BMP画面キャプチャ(&B)...",        IDM_BMPSAVE
